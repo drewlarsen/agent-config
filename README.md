@@ -14,6 +14,7 @@ so editing a file in this repo *is* editing the live skill — just `git commit`
 | Skill | What it does | Invoke |
 | --- | --- | --- |
 | `decide` | Decision brief from the owner's POV — Context · Issue · Options · one recommendation, in stakes not jargon | `/decide` |
+| `seo-audit` | Read-only SEO + AI-search audit. One focused check (`sitemap`, `og`, `schema`, `headers`, `hreflang`, `cwv`, …) or a full launch audit; defers to the project's own SEO docs | `/seo-audit [target]` |
 
 ### Drew's toolbox — external (each managed by its own installer, **not** vendored here)
 
