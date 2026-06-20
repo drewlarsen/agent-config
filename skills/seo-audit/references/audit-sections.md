@@ -20,22 +20,19 @@ every section and assemble §18.
 
 ## Stance and rules (every section inherits these)
 
-- **Read-only.** Do not edit files. Produce findings and recommendations only.
-  If the user explicitly converts the task to implementation, that is a new task.
-- **Evidence or it didn't happen.** Ground every finding in one of: file path +
-  line, route + HTTP status, rendered HTML (view-source or fetched), browser/
-  DevTools observation, official-doc citation, or a documented project
-  requirement. "Best practice says…" with no project evidence is not a finding —
-  it is at most a recommendation, labeled as such.
-- **Separate confirmed issues from recommendations from "needs production data."**
-  Never present a hypothesis as a confirmed defect.
+The full stance lives in SKILL.md and governs every run: **read-only** (findings
+only, no edits), **evidence or it didn't happen** (file path + line, route + HTTP
+status, rendered HTML, browser/DevTools observation, official-doc citation, or a
+documented project requirement — "best practice says…" with no project evidence is
+a labeled recommendation, not a finding), **separate confirmed issues from
+recommendations from "needs production data,"** **currency over memory**, and the
+**anti-hack guard**. Don't restate them — apply them. The one rule specific to
+running the sections here:
+
 - **Respect server ownership.** If the project doc names an owner of a persistent
   local server (e.g. a human owns `:3000`), you may inspect it if it is up but
   must not start/stop/restart it. If it is down, say so. If you need your own
   server, ask first and use a temporary port, then stop it when done.
-- **Currency over memory.** Refresh official guidance (see below) before relying
-  on any threshold, metric name, or eligibility rule. Search SEO moves; do not
-  assert from training data.
 
 ## Refresh these official sources first (if web access is available)
 

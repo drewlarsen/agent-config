@@ -1,9 +1,10 @@
 ---
 name: seo-audit
-description: Read-only, evidence-grounded SEO + AI-search audit for any web codebase. Run `/seo-audit <target>` for one focused check — sitemap, canonicals, headers, hreflang, meta, og, schema/ld+json, content, ai, links, cwv, a11y, local, privacy — or `/seo-audit full` (or no argument) for a comprehensive launch-readiness audit ending in a Red/Yellow/Green verdict. Auto-discovers and defers to the project's own SEO docs; falls back to a built-in checklist. Use when asked to audit SEO or to check any of indexing, crawlability, robots, sitemaps, canonicals, redirects, HTTP headers, hreflang/i18n, titles/descriptions, Open Graph / social cards, structured data / schema, Core Web Vitals (LCP/INP/CLS), AI Overviews readiness, internal linking, local SEO, or public-data leakage.
-version: 3.0.0
+description: Read-only, evidence-grounded SEO + AI-search audit for any web codebase. Run `/seo-audit <target>` for one focused check — sitemap, canonicals, headers, hreflang, meta, og, schema, content, ai, links, cwv, a11y, local, search, privacy, measurement — or `/seo-audit full` (or no argument) for a comprehensive launch-readiness audit ending in a Red/Yellow/Green verdict. Auto-discovers and defers to the project's own SEO docs; falls back to a built-in checklist. Use when asked to audit SEO or to check any of indexing, crawlability, robots, sitemaps, canonicals, redirects, HTTP headers, hreflang/i18n, titles/descriptions, Open Graph / social cards, structured data / schema, Core Web Vitals (LCP/INP/CLS), AI Overviews readiness, internal linking, local SEO, or public-data leakage.
+version: 3.1.0
 user-invocable: true
-argument-hint: "[full · sitemap · canonicals · headers · hreflang · meta · og · schema · content · ai · links · cwv · a11y · local · privacy]"
+allowed-tools: Read, Grep, Glob, Bash, WebFetch, WebSearch
+argument-hint: "[full · sitemap · canonicals · headers · hreflang · meta · og · schema · content · ai · links · cwv · a11y · local · search · privacy · measurement]"
 ---
 
 # SEO Audit
@@ -40,11 +41,15 @@ closest section(s).
 | `privacy` | `boundary`, `leak`, `security` | public/private data boundary | §16 |
 | `measurement` | `monitoring`, `gsc`, `analytics` | measurement & launch monitoring | §17 |
 
+<!-- This table is the canonical target list. Keep the frontmatter `description` and
+`argument-hint`, plus `agents/openai.yaml`, in sync with it when adding/removing targets. -->
+
 ## How to run
 
 **Shared prep (always, but keep it proportional to the target):**
 
-1. **Stay read-only.** Findings and recommendations only; no file edits. If the
+1. **Stay read-only.** Findings and recommendations only; no file edits. (The
+   `allowed-tools` frontmatter enforces this where the harness honors it.) If the
    user converts the task to implementation, that's a new task.
 2. **Discover and defer to the project's own SEO docs.** Read `AGENTS.md` /
    `CLAUDE.md` (note any server-ownership rule + project stage), then find the
@@ -63,10 +68,11 @@ closest section(s).
    query/intent classes, and public/private field boundary from the project's docs
    + router — never assume another site's routes.
 
-**Single target:** read only that section in `references/audit-sections.md`, run
-its checks against the project's real routes/templates, and report **just that
-aspect** — a tight, evidence-backed finding list + a one-line mini-verdict
-(**Pass / Issues / Blocker**). Do not run the full multi-section pass.
+**Single target:** read that section in `references/audit-sections.md` (plus the
+short **Stance and rules** preamble), run its checks against the project's real
+routes/templates, and report **just that aspect** — a tight, evidence-backed
+finding list + a one-line mini-verdict (**Pass / Issues / Blocker**). Do not run
+the full multi-section pass.
 
 **Full:** run every section, then output the full report — **Launch verdict
 (Red/Yellow/Green)** first, then **P0 blockers → P1 fixes → P2 opportunities →
@@ -85,5 +91,5 @@ already strong → needs production/Search Console data.**
   content). The win condition for AI search is the same as classic search:
   crawlable, factual, well-structured, genuinely useful content.
 
-See `references/audit-sections.md` for all 18 sections, the official sources to
-refresh, and the currency guardrails.
+See `references/audit-sections.md` for every section's detailed checks, the
+official sources to refresh, and the currency guardrails.
