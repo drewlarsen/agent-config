@@ -13,7 +13,9 @@ so editing a file in this repo *is* editing the live skill — just `git commit`
 
 | Skill | What it does | Invoke |
 | --- | --- | --- |
+| `code-audit` | Deep review of **finished code at rest** — judged for simplicity, DRYness, clarity, naming. `audit` (read-only findings) or `fix` (behavior-preserving edits); one lens (`naming`·`dry`·`simplicity`·`structure`) or all four. The whole-module complement to diff-based `/code-review` & `/simplify` | `/code-audit [fix] [lens] <target>` |
 | `decide` | Decision brief from the owner's POV — Context · Issue · Options · one recommendation, in stakes not jargon | `/decide` |
+| `mobile-ui-audit` | Evidence-grounded **mobile UX** audit — drives the site at real phone viewports to prove mobile-*designed* vs. shrunken-desktop. One focused check (`touch`·`nav`·`reading`·`forms`·`device-fit`·`gestures`·`perf`·`media`·`pwa`) or a full Red/Yellow/Green audit; every finding cites `file:line` + a screenshot/measured value | `/mobile-ui-audit [target]` |
 | `seo-audit` | Read-only SEO + AI-search audit. One focused check (`sitemap`, `og`, `schema`, `headers`, `hreflang`, `cwv`, …) or a full launch audit; defers to the project's own SEO docs | `/seo-audit [target]` |
 
 ### Drew's toolbox — external (each managed by its own installer, **not** vendored here)
