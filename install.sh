@@ -1,11 +1,16 @@
 #!/usr/bin/env bash
 #
-# install.sh — symlink every skill in ./skills/ into Claude Code and Codex.
+# install.sh — symlink this repo's skills and global instructions into
+# Claude Code and Codex.
 #
 # Each skill is a directory (skills/<name>/SKILL.md). This script points
 # ~/.claude/skills/<name> and ~/.codex/skills/<name> at the copy in THIS repo,
 # so the repo is the single source of truth: edit a file here, the live skill
 # changes; `git commit` captures it.
+#
+# The two global instruction files are linked the same way:
+#   instructions/claude-global.md -> ~/.claude/CLAUDE.md
+#   instructions/codex-global.md  -> ~/.codex/AGENTS.md
 #
 # Safe to run repeatedly (idempotent). If a real (non-symlink) skill dir is
 # already in the way, it's moved aside to <name>.bak.<timestamp> before linking.
@@ -31,7 +36,7 @@ run() {
   fi
 }
 
-link_skill() {
+link_path() {
   local src="$1" dest="$2"
   if [ -L "$dest" ]; then
     local cur; cur="$(readlink "$dest")"
@@ -43,7 +48,7 @@ link_skill() {
     fi
   elif [ -e "$dest" ]; then
     local bak="$dest.bak.$(date +%Y%m%d-%H%M%S)"
-    echo "  backup real dir -> $bak, then link: $dest"
+    echo "  backup existing -> $bak, then link: $dest"
     run mv "$dest" "$bak"
     run ln -sfn "$src" "$dest"
   else
@@ -64,12 +69,25 @@ install_into() {
   for d in "$SKILLS_SRC"/*/; do
     [ -d "$d" ] || continue
     found=1
-    link_skill "${d%/}" "$skills_dir/$(basename "$d")"
+    link_path "${d%/}" "$skills_dir/$(basename "$d")"
   done
   if [ "$found" -eq 0 ]; then
     echo "  (no skills found in $SKILLS_SRC)"
   fi
   return 0
+}
+
+install_instructions() {
+  local label="$1" base="$2" src="$3" dest="$4"
+  if [ ! -d "$base" ]; then
+    return
+  fi
+  if [ ! -f "$src" ]; then
+    echo "$label instructions: $src not found — skipping."
+    return
+  fi
+  echo "$label instructions -> $dest"
+  link_path "$src" "$dest"
 }
 
 echo "agent-config installer"
@@ -79,6 +97,12 @@ echo
 
 install_into "Claude Code" "$HOME/.claude" "$HOME/.claude/skills"
 echo
+install_instructions "Claude Code" "$HOME/.claude" \
+  "$REPO/instructions/claude-global.md" "$HOME/.claude/CLAUDE.md"
+echo
 install_into "Codex" "$HOME/.codex" "$HOME/.codex/skills"
+echo
+install_instructions "Codex" "$HOME/.codex" \
+  "$REPO/instructions/codex-global.md" "$HOME/.codex/AGENTS.md"
 echo
 echo "Done. Start a NEW Claude/Codex session for newly linked skills to appear."

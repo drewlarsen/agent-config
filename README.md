@@ -1,9 +1,28 @@
 # agent-config
 
-My portable agent skills, version-controlled and **symlinked** into Claude Code +
-Codex. The real files live in `skills/` here; the tools read them through symlinks,
-so editing a file in this repo *is* editing the live skill — just `git commit`.
+My portable agent skills **and global instructions**, version-controlled and
+**symlinked** into Claude Code + Codex. The real files live in `skills/` and
+`instructions/` here; the tools read them through symlinks, so editing a file in
+this repo *is* editing the live skill or instruction — just `git commit`.
 **No secrets ever live here.**
+
+---
+
+## Global instructions
+
+The always-on rules each tool loads at the start of every session — how to talk
+to me, plus tool-specific standing rules.
+
+| File | Linked to | Holds |
+| --- | --- | --- |
+| `instructions/claude-global.md` | `~/.claude/CLAUDE.md` | How to talk to me · subagent model economy · dev-server ports |
+| `instructions/codex-global.md` | `~/.codex/AGENTS.md` | How to talk to me · Karpathy coding guidelines |
+
+**"How to talk to me" is deliberately identical in both files.** It's the one
+thing that must not differ per tool — edit it in one, paste it to the other, in
+the same commit. Everything below that block is tool-specific and free to differ.
+
+Changes take effect in the **next** session, not the running one.
 
 ---
 
@@ -40,9 +59,12 @@ cd ~/Projects/agent-config
 ./install.sh
 ```
 
-That symlinks every skill in `skills/` into `~/.claude/skills` and `~/.codex/skills`.
-Idempotent — safe to re-run. Add `--dry-run` to preview. **Restart your Claude/Codex
-session** for newly linked skills to appear.
+That symlinks every skill in `skills/` into `~/.claude/skills` and `~/.codex/skills`,
+and links the two files in `instructions/` to `~/.claude/CLAUDE.md` and
+`~/.codex/AGENTS.md`. Idempotent — safe to re-run. Add `--dry-run` to preview.
+Anything real already sitting at one of those paths is moved to `<name>.bak.<timestamp>`
+first, never overwritten. **Restart your Claude/Codex session** for the changes to
+take effect.
 
 ---
 
@@ -78,6 +100,10 @@ skills from the table above.
 ```bash
 rm ~/.claude/skills/decide ~/.codex/skills/decide   # removes only the symlinks
 ```
+
+Same for the instruction files — `rm ~/.claude/CLAUDE.md` removes the link, not
+the content (which stays in `instructions/`). Copy the file back out of the repo
+first if you want to keep using it unlinked.
 
 ---
 
