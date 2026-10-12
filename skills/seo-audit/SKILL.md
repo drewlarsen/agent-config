@@ -58,7 +58,9 @@ closest section(s).
    doctrine + playbook pair (e.g. `docs/ops/seo-doctrine.md` +
    `seo-playbook.md`, or `docs/seo/**`) is the source of truth: the playbook is
    the binding project authority. Audit the code *against* those docs and flag
-   **code↔doc drift both ways**. If none exist, use the generic checklist and note
+   **code↔doc drift both ways**. If the project has no doctrine of its own, read
+   `references/seo-doctrine.md` (the shared doctrine) for the strategic frame. If
+   it has no SEO docs at all, use the generic checklist with that doctrine and note
    "no documented SEO strategy" as a finding. (BAG/`boco.art` is one example of a
    project with such docs — nothing here is project-specific.)
 3. **Refresh official guidance** for any currency-sensitive target (`cwv`, `ai`,

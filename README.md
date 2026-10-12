@@ -35,7 +35,22 @@ Changes take effect in the **next** session, not the running one.
 | `code-audit` | Deep review of **finished code at rest** — judged for simplicity, DRYness, clarity, naming. `audit` (read-only findings) or `fix` (behavior-preserving edits); one lens (`naming`·`dry`·`simplicity`·`structure`) or all four. The whole-module complement to diff-based `/code-review` & `/simplify` | `/code-audit [fix] [lens] <target>` |
 | `decide` | Decision brief from the owner's POV — Context · Issue · Options · one recommendation, in stakes not jargon | `/decide` |
 | `mobile-ui-audit` | Evidence-grounded **mobile UX** audit — drives the site at real phone viewports to prove mobile-*designed* vs. shrunken-desktop. One focused check (`touch`·`nav`·`reading`·`forms`·`device-fit`·`gestures`·`perf`·`media`·`pwa`) or a full Red/Yellow/Green audit; every finding cites `file:line` + a screenshot/measured value | `/mobile-ui-audit [target]` |
-| `seo-audit` | Read-only SEO + AI-search audit. One focused check (`sitemap`, `og`, `schema`, `headers`, `hreflang`, `cwv`, …) or a full launch audit; defers to the project's own SEO docs | `/seo-audit [target]` |
+| `seo-audit` | Read-only SEO + AI-search audit. One focused check (`sitemap`, `og`, `schema`, `headers`, `hreflang`, `cwv`, …) or a full launch audit; defers to the project's own SEO docs, and carries the shared SEO doctrine (`references/seo-doctrine.md`) for projects without one | `/seo-audit [target]` |
+
+### Mine — integration playbooks (load automatically by topic)
+
+Lessons and proven designs from integrations that recur across my projects, so
+the next project starts from what already works. Not code libraries: each points
+at the working reference implementation. Shared *code* gets extracted into a
+package only once a second project really uses it.
+
+| Skill | Covers | Reference implementation |
+| --- | --- | --- |
+| `pinterest-integration` | API v5, token renewal (one refresher only), sandbox vs production boards, daily auto-pinning, catalogs, weekly analytics | shayna-art |
+| `etsy-integration` | Open API v3, OAuth + PKCE, the shared-secret header, sale recording, webhooks, selling one-of-a-kind work across channels | shayna-art |
+| `slack-reports` | The house message style and posting mechanics for job reports, failures, sales and weekly summaries | bo-co-art |
+| `resend-email` | Key scopes, the From line, sending-domain DNS, confirmed opt-in, newsletters, debugging a 401 | bo-co-art |
+| `vercel-ops` | Firewall and bot gotchas, crawler cost, sharp in production, previews, env vars, caching | bo-co-art |
 
 ### Drew's toolbox — external (each managed by its own installer, **not** vendored here)
 
